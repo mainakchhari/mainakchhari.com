@@ -1,0 +1,36 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "docker-compose:up-deps",
+            "type": "docker-compose",
+            "dockerCompose": {
+                "up": {
+                    "detached": true,
+                    "build": false,
+                    "services": [
+                        "db_debug"
+                    ]
+                },
+                "files": [
+                    "${workspaceFolder}/docker-compose.debug.yml",
+                ]
+            }
+        },
+        {
+            "label": "docker-compose:down-deps",
+            "type": "docker-compose",
+            "dockerCompose": {
+                "down": {
+                    "removeVolumes": false,
+                    "services": [
+                        "db_debug"
+                    ]
+                },
+                "files": [
+                    "${workspaceFolder}/docker-compose.debug.yml",
+                ]
+            }
+        }
+    ]
+}

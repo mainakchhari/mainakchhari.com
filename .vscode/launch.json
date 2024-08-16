@@ -1,0 +1,41 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug: Django",
+            "type": "debugpy",
+            "request": "launch",
+            "preLaunchTask": "docker-compose:up-deps",
+            "args": [
+                "runserver",
+                "127.0.0.1:8001",
+                "--noreload",
+                "--nothreading"
+            ],
+            "pythonArgs": [
+                "-Xfrozen_modules=off"
+            ],
+            "django": true,
+            "autoStartBrowser": false,
+            "program": "${workspaceFolder}/manage.py",
+            "postDebugTask": "docker-compose:down-deps",
+        },
+        {
+            "name": "Debug: Migrate",
+            "type": "debugpy",
+            "request": "launch",
+            "preLaunchTask": "docker-compose:up-deps",
+            "args": [
+                "migrate",
+                "--noinput"
+            ],
+            "pythonArgs": [
+                "-Xfrozen_modules=off"
+            ],
+            "django": true,
+            "autoStartBrowser": false,
+            "program": "${workspaceFolder}/manage.py",
+            "postDebugTask": "docker-compose:down-deps",
+        }
+    ]
+}

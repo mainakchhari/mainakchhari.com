@@ -3,13 +3,42 @@ services:
     build: .
     command: gunicorn webserver.wsgi
     restart: always
+    depends_on:
+      - db
     ports:
       - "8000:8000"
     environment:
-      SECRET_KEY_FILE: /run/secrets/secret_key
+      - SECRET_KEY_FILE=/run/secrets/secret_key
+      - POSTGRES_DB=mainakchhari_com
+      - POSTGRES_USER=mainakchhari
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_passwd
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
     secrets:
       - secret_key
+      - postgres_passwd
+
+  db:
+    image: postgres:16-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    expose:
+      - 5432
+    ports:
+      - 54320:5432
+    environment:
+      - POSTGRES_DB=mainakchhari_com
+      - POSTGRES_USER=mainakchhari
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_passwd
+    secrets:
+      - postgres_passwd
+
+volumes:
+  postgres_data:
 
 secrets:
   secret_key:
     file: ./secrets/SECRET_KEY_FILE
+  postgres_passwd:
+    file: ./secrets/POSTGRES_PASSWORD_FILE

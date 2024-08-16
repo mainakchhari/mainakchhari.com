@@ -9,9 +9,9 @@ ENV POETRY_NO_INTERACTION=1 \
   POETRY_CACHE_DIR=/tmp/poetry_cache
 WORKDIR /app
 COPY poetry.lock pyproject.toml ./
-RUN poetry install --no-root --only=main && rm -rf $POETRY_CACHE_DIR
+RUN poetry install --no-root --only=main
 COPY . ./
-RUN poetry run python manage.py collectstatic
+RUN poetry run python manage.py collectstatic --no-input
 
 FROM python:3.12-slim as production
 ENV VIRTUAL_ENV=/app/.venv \

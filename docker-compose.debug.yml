@@ -1,0 +1,13 @@
+services:
+  db_debug:
+    image: postgres:16-alpine
+    volumes:
+      - postgres_data_debug:/var/lib/postgresql/data
+    restart: unless-stopped
+    ports:
+      - 45433:5432
+    environment:
+      - POSTGRES_PASSWORD=debug
+
+volumes:
+  postgres_data_debug:

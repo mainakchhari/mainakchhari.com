@@ -1,0 +1,15 @@
+services:
+  web:
+    build: .
+    command: gunicorn webserver.wsgi
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      SECRET_KEY_FILE: /run/secrets/secret_key
+    secrets:
+      - secret_key
+
+secrets:
+  secret_key:
+    file: ./secrets/SECRET_KEY_FILE
